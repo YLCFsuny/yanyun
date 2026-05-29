@@ -1,0 +1,88 @@
+server:
+  port: 8084
+
+seata:
+  enabled: false
+  registry: # TC服务注册中心的配置，微服务根据这些信息去注册中心获取tc服务地址
+    type: nacos # 注册中心类型 nacos
+    nacos:
+      server-addr: 192.168.100.128:8848 # nacos地址
+      #      server-addr: localhost:8848
+      namespace: "" # namespace，默认为空
+      group: DEFAULT_GROUP # 分组，默认是DEFAULT_GROUP
+      application: seata-server # seata服务名称
+      username: nacos
+      password: nacos
+  application-id: user-service # 改为各自的服务名
+  tx-service-group: hmall # 事务组名称
+  service:
+    vgroup-mapping: # 事务组与tc集群的映射关系
+      hmall: "default"
+#  data-source-proxy-mode: XA   //默认 AT 模式
+
+spring:
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
+  application:
+    name: user-service
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://192.168.100.128:3366/hm-user?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+#    url: jdbc:mysql://${hm.db.host}:3306/hmall?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+#    url: jdbc:mysql://localhost:3306/hm-user
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: ${HM_DB_PASSWORD:123}
+  cloud:
+    nacos:
+      server-addr: 192.168.100.128:8848
+#      server-addr: localhost:8848
+mybatis-plus:
+  configuration:
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
+  global-config:
+    db-config:
+      update-strategy: not_null
+      id-type: auto
+logging:
+  level:
+    com.hmall: debug
+  pattern:
+    dateformat: HH:mm:ss:SSS
+  file:
+    path: "logs/${spring.application.name}"
+knife4j:
+  enable: true
+  openapi:
+    title: 彦云商城用户接口文档
+    description: "彦云商城用户接口文档"
+    email: zhanghuyi@itcast.cn
+    concat: 虎哥
+    url: https://www.itcast.cn
+    version: v1.0.0
+    group:
+      default:
+        group-name: default
+        api-rule: package
+        api-rule-resources:
+          - com.hmall.user.controller
+
+#feign:
+#  okhttp:
+#    enabled: true # 开启OKHttp功能
+
+hm:
+  jwt:
+    location: classpath:hmall.jks
+    alias: hmall
+    password: ${HM_JK_PASSWORD:hmall123}
+    tokenTTL: 30m
+#  auth:
+#    excludePaths:
+#      - /search/**
+#      - /users/login
+#      - /items/**
+#      - /hi
+# keytool -genkeypair -alias hmall -keyalg RSA -keypass hmall123 -keystore hmall.jks -storepass hmall123

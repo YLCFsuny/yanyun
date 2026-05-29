@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn spring-boot:run -pl hm-gateway -DskipTests)",
+      "Bash(mvn compile *)"
+    ]
+  }
+}
