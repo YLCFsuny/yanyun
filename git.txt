@@ -1,17 +1,80 @@
+# ============================================
+# Git 常用命令及说明
+# ============================================
+
+# 一、用户配置（只需设置一次）
+
+# 设置全局用户名（提交代码时显示的作者名称）
 git config --global user.name YLCFsuny
 
+# 设置全局邮箱（与 GitHub/GitLab 账号关联的邮箱）
 git config --global user.email 2649950887@qq.com
 
+# 查看所有全局配置项
 git config --global --list
 
+# 设置 HTTPS 代理（用于科学上网访问 GitHub）
 git config --global https.proxy http://127.0.0.1:33210
 
+# 二、克隆仓库
+
+# 通过 HTTPS 克隆远程仓库到本地
 git clone https://github.com/YLCFsuny/yanyun.git
 
+# 通过 SSH 克隆远程仓库（适用于公司内部 Git 服务器）
+git clone ssh://git@公司git地址/项目组/项目名.git
+
+# 三、目录操作
+
+# 进入项目目录
 cd yanyun
 
+# 查看当前目录下的文件列表
 ls
 
+# 返回上一级目录
 cd ..
 
+# 使用 VS Code 打开文件
 code README.md
+
+# 四、分支管理
+
+# 创建并切换到新分支（-b 表示创建新分支）
+git checkout -b feature/update-git-commands
+
+# 切换到指定分支
+git checkout master
+
+# 删除已合并的分支（-d 安全删除，分支必须已合并）
+git branch -d feature/update-git-commands
+
+# 强制删除分支（-D 不检查是否已合并，慎用）
+git branch -D feature/update-git-commands
+
+# 五、暂存与提交
+
+# 将指定文件添加到暂存区
+git add git.txt
+
+# 提交暂存区的内容，并附带提交说明
+git commit -m "常见git命令"
+
+# 六、远程操作
+
+# 将本地分支推送到远程仓库
+git push origin feature/update-git-commands
+
+# 从远程仓库拉取指定分支并合并到当前分支
+git pull origin master
+
+# 七、状态查看
+
+# 查看工作区和暂存区的状态
+git status
+
+# 从远程仓库获取最新信息（不自动合并）
+git fetch
+
+# 查看所有远程分支
+git branch -r
